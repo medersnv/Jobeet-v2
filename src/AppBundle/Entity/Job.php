@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Job
@@ -25,6 +26,7 @@ class Job
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Category", inversedBy="jobs" )
      * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     * @Assert\NotBlank()
      */
     private $category;
 
@@ -32,6 +34,7 @@ class Job
      * @var string
      *
      * @ORM\Column(name="type", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $type;
 
@@ -39,6 +42,7 @@ class Job
      * @var string
      *
      * @ORM\Column(name="company", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $company;
 
@@ -46,6 +50,7 @@ class Job
      * @var string
      *
      * @ORM\Column(name="logo", type="string", length=255, nullable=true)
+     * @Assert\NotBlank()
      */
     private $logo;
 
@@ -53,6 +58,7 @@ class Job
      * @var string
      *
      * @ORM\Column(name="url", type="string", length=255, nullable=true)
+     * @Assert\NotBlank()
      */
     private $url;
 
@@ -60,6 +66,7 @@ class Job
      * @var string
      *
      * @ORM\Column(name="position", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $position;
 
@@ -67,6 +74,7 @@ class Job
      * @var string
      *
      * @ORM\Column(name="location", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $location;
 
@@ -74,6 +82,7 @@ class Job
      * @var string
      *
      * @ORM\Column(name="description", type="text")
+     * @Assert\NotBlank()
      */
     private $description;
 
@@ -81,6 +90,7 @@ class Job
      * @var string
      *
      * @ORM\Column(name="howToApply", type="text")
+     * @Assert\NotBlank()
      */
     private $howToApply;
 
@@ -88,6 +98,7 @@ class Job
      * @var string
      *
      * @ORM\Column(name="token", type="string", length=255, unique=true)
+     * @Assert\NotBlank()
      */
     private $token;
 
@@ -109,6 +120,7 @@ class Job
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $email;
 
@@ -116,6 +128,7 @@ class Job
      * @var \DateTime
      *
      * @ORM\Column(name="expiresAt", type="datetime")
+     * @Assert\NotBlank()
      */
     private $expiresAt;
 
@@ -123,6 +136,7 @@ class Job
      * @var \DateTime
      *
      * @ORM\Column(name="createdAt", type="datetime")
+     * @Assert\NotBlank()
      */
     private $createdAt;
 
@@ -130,6 +144,7 @@ class Job
      * @var \DateTime
      *
      * @ORM\Column(name="updatedAt", type="datetime")
+     * @Assert\NotBlank()
      */
     private $updatedAt;
 

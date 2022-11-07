@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Category
@@ -23,6 +24,7 @@ class Category
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Assert\NotBlank()
      */
     private $name;
 
@@ -36,6 +38,10 @@ class Category
      */
     private $affiliates;
 
+    public function __toString()
+    {
+        return $this->getName();
+    }
 
     /**
      * Get id

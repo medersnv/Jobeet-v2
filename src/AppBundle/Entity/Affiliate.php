@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Affiliate
@@ -32,6 +33,7 @@ class Affiliate
      * @var string
      *
      * @ORM\Column(name="url", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $url;
 
@@ -39,6 +41,7 @@ class Affiliate
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $email;
 
@@ -46,6 +49,7 @@ class Affiliate
      * @var string
      *
      * @ORM\Column(name="token", type="string", length=255, unique=true)
+     * @Assert\NotBlank()
      */
     private $token;
 
@@ -60,6 +64,7 @@ class Affiliate
      * @var \DateTime
      *
      * @ORM\Column(name="createdAt", type="datetime")
+     * @Assert\NotBlank()
      */
     private $createdAt;
 
