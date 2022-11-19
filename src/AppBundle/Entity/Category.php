@@ -8,6 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Category
  *
+ * @ORM\Entity()
  * @ORM\Table(name="category")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CategoryRepository")
  */
@@ -37,6 +38,8 @@ class Category
      * @ORM\ManyToMany(targetEntity="Affiliate", mappedBy="categories")
      */
     private $affiliates;
+
+    private $activeJobs;
 
     public function __toString()
     {
@@ -151,5 +154,14 @@ class Category
     public function getAffiliates()
     {
         return $this->affiliates;
+    }
+
+    public function setActiveJobs($jobs)
+    {
+        $this->activeJobs = $jobs;
+    }
+    public function getActiveJobs()
+    {
+        return $this->activeJobs;
     }
 }
