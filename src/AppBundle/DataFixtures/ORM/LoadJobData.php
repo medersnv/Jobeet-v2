@@ -65,11 +65,11 @@ class LoadJobData extends AbstractFixture implements OrderedFixtureInterface
         for($i = 10; $i <= 30; $i++)
         {
             $job = new Job();
-            $job->setCategory($em->merge($this->getReference('category-programming')));
+            $job->setCategory($em->merge($this->getReference('category-design')));
             $job->setType('full-time');
             $job->setCompany('Company '.$i);
-            $job->setPosition('Web Developer');
-            $job->setLocation('Paris, France');
+            $job->setPosition('Web Designer');
+            $job->setLocation('Bishkek, France');
             $job->setDescription('Lorem ipsum dolor sit amet, consectetur adipisicing elit.');
             $job->setHowToApply('Send your resume to lorem.ipsum [at] dolor.sit');
             $job->setIsPublic(true);
