@@ -62,7 +62,7 @@ class LoadJobData extends AbstractFixture implements OrderedFixtureInterface
 //        $em->persist($job_extreme_sensio);
 //        $em->persist($job_expired);
 
-        for($i = 10; $i <= 30; $i++)
+        for($i = 31; $i <= 50; $i++)
         {
             $job = new Job();
             $job->setCategory($em->merge($this->getReference('category-design')));
