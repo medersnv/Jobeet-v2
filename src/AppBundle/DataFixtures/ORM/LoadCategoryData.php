@@ -23,17 +23,22 @@ class LoadCategoryData extends AbstractFixture implements OrderedFixtureInterfac
         $administrator = new Category();
         $administrator->setName('Administrator');
 
+        $web = new Category();
+        $web->setName('Web Designer');
+
         $em->persist($design);
         $em->persist($programming);
         $em->persist($manager);
         $em->persist($administrator);
+        $em->persist($web);
 
         $em->flush();
 
-        $this->addReference('category-design', $design);
-        $this->addReference('category-programming', $programming);
-        $this->addReference('category-manager', $manager);
-        $this->addReference('category-administrator', $administrator);
+//        $this->addReference('category-design', $design);
+//        $this->addReference('category-programming', $programming);
+//        $this->addReference('category-manager', $manager);
+//        $this->addReference('category-administrator', $administrator);
+//        $this->addReference('category-web-designer', $web);
     }
 
     public function getOrder()

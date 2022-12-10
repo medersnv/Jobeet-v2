@@ -2,189 +2,121 @@
 
 namespace AppBundle\Entity;
 
-use AppBundle\Utils\Jobeet;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use AppBundle\Utils\Jobeet as Jobeet;
 
 /**
- * Job
- *
  * @ORM\Entity()
  * @ORM\Table(name="job")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\JobRepository")
  * @ORM\HasLifecycleCallbacks()
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\JobRepository")
  */
 class Job
 {
     /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Category", inversedBy="jobs" )
+     * @ORM\ManyToOne(targetEntity="Category", inversedBy="jobs")
      * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
      * @Assert\NotBlank()
      */
     private $category;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="type", type="string", length=255)
+     * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
+     * @Assert\Choice(callback="getTypeValues")
      */
     private $type;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="company", type="string", length=255)
+     * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
      */
     private $company;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="logo", type="string", length=255, nullable=true)
-     * @Assert\NotBlank()
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Image()
      */
     private $logo;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="url", type="string", length=255, nullable=true)
-     * @Assert\NotBlank()
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $url;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="position", type="string", length=255)
+     * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
      */
     private $position;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="location", type="string", length=255)
+     * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
      */
     private $location;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="description", type="text")
+     * @ORM\Column(type="text")
      * @Assert\NotBlank()
      */
     private $description;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="howToApply", type="text")
+     * @ORM\Column(type="text")
      * @Assert\NotBlank()
      */
     private $howToApply;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="token", type="string", length=255, unique=true)
-     * @Assert\NotBlank()
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private $token;
 
     /**
-     * @var bool
-     *
-     * @ORM\Column(name="isPublic", type="boolean", nullable=true)
+     * @ORM\Column(type="boolean", nullable=true)
      */
     private $isPublic;
 
     /**
-     * @var bool
-     *
-     * @ORM\Column(name="isActivated", type="boolean", nullable=true)
+     * @ORM\Column(type="boolean", nullable=true)
      */
     private $isActivated;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="email", type="string", length=255)
+     * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
+     * @Assert\Email()
      */
     private $email;
 
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="expiresAt", type="datetime")
-     * @Assert\NotBlank()
+     * @ORM\Column(type="datetime")
      */
     private $expiresAt;
 
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="createdAt", type="datetime")
-     * @Assert\NotBlank()
+     * @ORM\Column(type="datetime")
      */
     private $createdAt;
 
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="updatedAt", type="datetime")
-     * @Assert\NotBlank()
+     * @ORM\Column(type="datetime")
      */
     private $updatedAt;
 
     /**
-     * @ORM\PrePersist
-     */
-    public function setCreatedAtValue()
-    {
-        if (!$this->getCreatedAt())
-        {
-            $this->createdAt = new \DateTime();
-        }
-    }
-
-    /**
-     * @ORM\PrePersist
-     */
-    public function setExpiresAtValue()
-    {
-        if (!$this->getExpiresAt()){
-            $now = $this->getCreatedAt() ? $this->getCreatedAt()->format('U') : time();
-            $this->expiresAt = new \DateTime(date('Y-m-d H:i:s', $now + 86400 * 30));
-        }
-    }
-
-    /**
-     * @ORM\PreUpdate
-     * @ORM\PrePersist
-     */
-    public function setUpdatedAtValue()
-    {
-        $this->updatedAt = new \DateTime();
-    }
-
-    /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -192,34 +124,9 @@ class Job
     }
 
     /**
-     * Set category
-     *
-     * @param integer $category
-     *
-     * @return Job
-     */
-    public function setCategory($category)
-    {
-        $this->category = $category;
-
-        return $this;
-    }
-
-    /**
-     * Get category
-     *
-     * @return int
-     */
-    public function getCategory()
-    {
-        return $this->category;
-    }
-
-    /**
      * Set type
      *
      * @param string $type
-     *
      * @return Job
      */
     public function setType($type)
@@ -243,7 +150,6 @@ class Job
      * Set company
      *
      * @param string $company
-     *
      * @return Job
      */
     public function setCompany($company)
@@ -267,7 +173,6 @@ class Job
      * Set logo
      *
      * @param string $logo
-     *
      * @return Job
      */
     public function setLogo($logo)
@@ -291,7 +196,6 @@ class Job
      * Set url
      *
      * @param string $url
-     *
      * @return Job
      */
     public function setUrl($url)
@@ -315,7 +219,6 @@ class Job
      * Set position
      *
      * @param string $position
-     *
      * @return Job
      */
     public function setPosition($position)
@@ -339,7 +242,6 @@ class Job
      * Set location
      *
      * @param string $location
-     *
      * @return Job
      */
     public function setLocation($location)
@@ -363,7 +265,6 @@ class Job
      * Set description
      *
      * @param string $description
-     *
      * @return Job
      */
     public function setDescription($description)
@@ -387,7 +288,6 @@ class Job
      * Set howToApply
      *
      * @param string $howToApply
-     *
      * @return Job
      */
     public function setHowToApply($howToApply)
@@ -411,7 +311,6 @@ class Job
      * Set token
      *
      * @param string $token
-     *
      * @return Job
      */
     public function setToken($token)
@@ -435,7 +334,6 @@ class Job
      * Set isPublic
      *
      * @param boolean $isPublic
-     *
      * @return Job
      */
     public function setIsPublic($isPublic)
@@ -448,7 +346,7 @@ class Job
     /**
      * Get isPublic
      *
-     * @return bool
+     * @return boolean
      */
     public function getIsPublic()
     {
@@ -459,7 +357,6 @@ class Job
      * Set isActivated
      *
      * @param boolean $isActivated
-     *
      * @return Job
      */
     public function setIsActivated($isActivated)
@@ -472,7 +369,7 @@ class Job
     /**
      * Get isActivated
      *
-     * @return bool
+     * @return boolean
      */
     public function getIsActivated()
     {
@@ -483,7 +380,6 @@ class Job
      * Set email
      *
      * @param string $email
-     *
      * @return Job
      */
     public function setEmail($email)
@@ -507,7 +403,6 @@ class Job
      * Set expiresAt
      *
      * @param \DateTime $expiresAt
-     *
      * @return Job
      */
     public function setExpiresAt($expiresAt)
@@ -531,7 +426,6 @@ class Job
      * Set createdAt
      *
      * @param \DateTime $createdAt
-     *
      * @return Job
      */
     public function setCreatedAt($createdAt)
@@ -555,7 +449,6 @@ class Job
      * Set updatedAt
      *
      * @param \DateTime $updatedAt
-     *
      * @return Job
      */
     public function setUpdatedAt($updatedAt)
@@ -575,6 +468,49 @@ class Job
         return $this->updatedAt;
     }
 
+    /**
+     * Set category
+     *
+     * @param \AppBundle\Entity\Category $category
+     * @return Job
+     */
+    public function setCategory(\AppBundle\Entity\Category $category = null)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return \AppBundle\Entity\Category
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setCreatedAtValue()
+    {
+        if(!$this->getCreatedAt())
+        {
+            $this->createdAt = new \DateTime();
+        }
+    }
+
+    /**
+     * @ORM\PreUpdate
+     * @ORM\PrePersist
+     */
+    public function setUpdatedAtValue()
+    {
+        $this->updatedAt = new \DateTime();
+    }
+
     public function getCompanySlug()
     {
         return Jobeet::slugify($this->getCompany());
@@ -588,5 +524,57 @@ class Job
     public function getLocationSlug()
     {
         return Jobeet::slugify($this->getLocation());
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setExpiresAtValue()
+    {
+        if (!$this->getExpiresAt()) {
+            $now = $this->getCreatedAt() ? $this->getCreatedAt()->format('U') : time();
+            $this->expiresAt = new \DateTime(date('Y-m-d H:i:s', $now + 86400 * 30));
+        }
+    }
+
+    public static function getTypes()
+    {
+        return array('full-time' => 'Full time', 'part-time' => 'Part time', 'freelance' => 'Freelance');
+    }
+
+    public static function getTypeValues()
+    {
+        return array_keys(self::getTypes());
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setTokenValue()
+    {
+        if(!$this->getToken())
+        {
+            $this->token = sha1($this->getEmail().rand(11111, 99999));
+        }
+    }
+
+    public function isExpired()
+    {
+        return $this->getDaysBeforeExpires() < 0;
+    }
+
+    public function expiresSoon()
+    {
+        return $this->getDaysBeforeExpires() < 5;
+    }
+
+    public function getDaysBeforeExpires()
+    {
+        return ceil(($this->getExpiresAt()->format('U') - time()) / 86400);
+    }
+
+    public function publish()
+    {
+        $this->setIsActivated(true);
     }
 }
