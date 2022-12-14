@@ -84,7 +84,7 @@ class JobControllerTest extends WebTestCase
         $form = $crawler->selectButton('Preview your job')->form(array(
             'job[company]'      => 'Sensio Labs',
             'job[url]'          => 'http://www.sensio.com/',
-            'job[logo]'         => __DIR__.'/../../../../../web/bundles/app/images/sensio-labs.gif',
+            'job[file]'         => __DIR__.'/../../../../../web/bundles/app/images/sensio-labs.gif',
             'job[position]'     => 'Developer',
             'job[location]'     => 'Atlanta, USA',
             'job[description]'  => 'You will work with symfony to develop websites for our customers.',
@@ -184,6 +184,7 @@ class JobControllerTest extends WebTestCase
             throw $this->createNotFoundException('Job is activated and cannot be edited.');
         }
         // ...
+
     }
 
     public function testExtendJob()
@@ -214,4 +215,6 @@ class JobControllerTest extends WebTestCase
         // Check the expiration date
         $this->assertTrue($job->getExpiresAt()->format('y/m/d') == date('y/m/d', time() + 86400 * 30));
     }
+
+
 }

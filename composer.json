@@ -2,15 +2,19 @@
     "name": "ubuntu/jobeet",
     "license": "proprietary",
     "type": "project",
-    "description": "The \"Symfony Standard Edition\" distribution",
     "autoload": {
         "psr-4": {
-            "AppBundle\\": "src/AppBundle"
+            "": "src/"
         },
-        "classmap": [ "app/AppKernel.php", "app/AppCache.php" ]
+        "classmap": [
+            "app/AppKernel.php",
+            "app/AppCache.php"
+        ]
     },
     "autoload-dev": {
-        "files": [ "vendor/symfony/symfony/src/Symfony/Component/VarDumper/Resources/functions/dump.php" ]
+        "files": [
+            "vendor/symfony/symfony/src/Symfony/Component/VarDumper/Resources/functions/dump.php"
+        ]
     },
     "require": {
         "php": ">=5.3.9",
@@ -19,6 +23,8 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "sensio/distribution-bundle": "~4.0",
         "sensio/framework-extra-bundle": "^3.0.2",
+        "sonata-project/admin-bundle": "^3.20.1",
+        "sonata-project/doctrine-orm-admin-bundle": "^3.1.6",
         "symfony/monolog-bundle": "^3.0.2",
         "symfony/swiftmailer-bundle": "~2.3,>=2.3.10",
         "symfony/symfony": "2.8.*",
@@ -47,9 +53,6 @@
     },
     "config": {
         "bin-dir": "bin",
-        "platform": {
-            "php": "5.6"
-        },
         "sort-packages": true
     },
     "extra": {
@@ -59,8 +62,6 @@
         "incenteev-parameters": {
             "file": "app/config/parameters.yml"
         },
-        "branch-alias": {
-            "dev-master": null
-        }
+        "branch-alias": null
     }
 }

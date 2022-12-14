@@ -116,12 +116,15 @@ class JobController extends Controller
      */
     public function editAction(Request $request, Job $job)
     {
-        if ($request->getMethod() != Request::METHOD_POST) {
-            if(is_file($this->getParameter('jobs_directory').'/'.$job->getLogo())) {
-                $job->setLogo(
-                    new File($this->getParameter('jobs_directory').'/'.$job->getLogo())
-                );
-            }
+//        if ($request->getMethod() != Request::METHOD_POST) {
+//            if(is_file($this->getParameter('jobs_directory').'/'.$job->getLogo())) {
+//                $job->setLogo(
+//                    new File($this->getParameter('jobs_directory').'/'.$job->getLogo())
+//                );
+//            }
+//        }
+        if ($job->getIsActivated()) {
+            throw $this->createNotFoundException('Job is activated and cannot be edited.');
         }
 
         $deleteForm = $this->createDeleteForm($job);

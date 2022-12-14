@@ -52,7 +52,7 @@ class Category
 
     public function __toString()
     {
-        return $this->getName();
+        return $this->getName() ? $this->getName() : "";
     }
 
     /**
