@@ -26,6 +26,7 @@ class Affiliate
     /**
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Category", inversedBy="affiliates")
      * @ORM\JoinTable(name="affiliates_categories")
+     * @Assert\Count(min = 1)
      */
     private $categories;
 
@@ -49,7 +50,6 @@ class Affiliate
      * @var string
      *
      * @ORM\Column(name="token", type="string", length=255, unique=true)
-     * @Assert\NotBlank()
      */
     private $token;
 
@@ -64,9 +64,16 @@ class Affiliate
      * @var \DateTime
      *
      * @ORM\Column(name="createdAt", type="datetime")
-     * @Assert\NotBlank()
      */
     private $createdAt;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->categories = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * @ORM\PrePersist
@@ -112,6 +119,30 @@ class Affiliate
     {
         return $this->categories;
     }
+
+    /**
+     * Add categories
+     *
+     * @param \AppBundle\Entity\Category $categories
+     * @return Affiliate
+     */
+    public function addCategory(\AppBundle\Entity\Category $categories)
+    {
+        $this->categories[] = $categories;
+
+        return $this;
+    }
+
+    /**
+     * Remove categories
+     *
+     * @param \AppBundle\Entity\Category $categories
+     */
+    public function removeCategory(\AppBundle\Entity\Category $categories)
+    {
+        $this->categories->removeElement($categories);
+    }
+
 
     /**
      * Set url
@@ -232,35 +263,27 @@ class Affiliate
     {
         return $this->createdAt;
     }
+
     /**
-     * Constructor
+     * @ORM\PrePersist
      */
-    public function __construct()
+    public function setTokenValue()
     {
-        $this->categories = new \Doctrine\Common\Collections\ArrayCollection();
+        if(!$this->getToken())
+        {
+            $this->token = sha1($this->getEmail().rand(11111, 99999));
+        }
     }
 
     /**
-     * Add category
-     *
-     * @param \AppBundle\Entity\Category $category
-     *
-     * @return Affiliate
+     * @ORM\PrePersist
      */
-    public function addCategory(\AppBundle\Entity\Category $category)
+    public function setIsActiveValue()
     {
-        $this->categories[] = $category;
-
-        return $this;
+        if(!$this->getIsActive())
+        {
+            $this->isActive = false;
+        }
     }
 
-    /**
-     * Remove category
-     *
-     * @param \AppBundle\Entity\Category $category
-     */
-    public function removeCategory(\AppBundle\Entity\Category $category)
-    {
-        $this->categories->removeElement($category);
-    }
 }

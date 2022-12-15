@@ -12,30 +12,30 @@ class LoadCategoryData extends AbstractFixture implements OrderedFixtureInterfac
     public function load(ObjectManager $em)
     {
         $design = new Category();
-        $design->setName('Design');
+        $design->setName('Design3');
 
         $programming = new Category();
-        $programming->setName('Programming');
+        $programming->setName('Programming3');
 
-        $manager = new Category();
-        $manager->setName('Manager');
-
-        $administrator = new Category();
-        $administrator->setName('Administrator');
-
-        $web = new Category();
-        $web->setName('Web Designer');
+//        $manager = new Category();
+//        $manager->setName('Manager');
+//
+//        $administrator = new Category();
+//        $administrator->setName('Administrator');
+//
+//        $web = new Category();
+//        $web->setName('Web Designer');
 
         $em->persist($design);
         $em->persist($programming);
-        $em->persist($manager);
-        $em->persist($administrator);
-        $em->persist($web);
+//        $em->persist($manager);
+//        $em->persist($administrator);
+//        $em->persist($web);
 
         $em->flush();
 
-//        $this->addReference('category-design', $design);
-//        $this->addReference('category-programming', $programming);
+        $this->addReference('category-design', $design);
+        $this->addReference('category-programming', $programming);
 //        $this->addReference('category-manager', $manager);
 //        $this->addReference('category-administrator', $administrator);
 //        $this->addReference('category-web-designer', $web);
